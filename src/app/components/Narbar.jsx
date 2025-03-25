@@ -28,9 +28,9 @@ const Navbar = () => {
 
             {/* Menú de navegación */}
             <ul className={`md:flex md:gap-6 absolute bg-[#950F0F] z-40 md:static top-16 left-0 w-full md:w-auto md:bg-transparent shadow-md md:shadow-none p-5 md:p-0 transition-all ${isOpen ? "block" : "hidden"}`}>
-                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="#">Comprar</Link></li>
-                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="#">Cartones</Link></li>
-                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="#">Testimonios</Link></li>
+                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Seleccionar-Carton">Comprar</Link></li>
+                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Buscar-Carton">Cartones</Link></li>
+                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Testimonios">Testimonios</Link></li>
                 <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="#">Contacto</Link></li>
             </ul>
         </nav>

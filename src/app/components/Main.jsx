@@ -17,7 +17,7 @@ const Main = () => {
                 {/* Texto */}
                 <div className="text-center md:text-left flex-1">
                     <h1 className="text-3xl md:text-5xl font-bold mb-4">
-                        JUEGA CON UN SOLO CARTÓN <span className="text-yellow-400">12 VECES!</span>
+                        JUEGA CON UN SOLO CARTÓN <span className="text-yellow-200">12 VECES!</span>
                     </h1>
                     <p className="text-lg md:text-xl mb-6">
                         Únete a nuestras partidas a las <strong>7:00 PM</strong> vía YouTube, con un costo de
