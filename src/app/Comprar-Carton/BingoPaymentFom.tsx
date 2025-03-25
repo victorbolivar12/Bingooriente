@@ -32,11 +32,11 @@ export default function BingoPaymentForm() {
         },
     });
 
-    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget.files && event.currentTarget.files[0]) {
-            formik.setFieldValue("receipt", event.currentTarget.files[0]);
-        }
-    };
+    // const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //     if (event.currentTarget.files && event.currentTarget.files[0]) {
+    //         formik.setFieldValue("receipt", event.currentTarget.files[0]);
+    //     }
+    // };
 
     return (
         <div className="w-full mx-auto p-6 md:px-20 my-5 rounded-lg text-white">

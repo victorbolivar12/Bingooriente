@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from 'next/image';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +11,7 @@ const Navbar = () => {
         <nav className="p-5 flex justify-between items-center shadow-lg lg:px-12">
             {/* Logo */}
             <Link href="/">
-                <img src="LOGO.png" alt="Logo Bingoriente" className="w-40 lg:w-60 cursor-pointer" />
+                <Image src="/LOGO.png" alt="Logo Bingoriente" width={250} height={250} className="w-40 lg:w-60 cursor-pointer" />
             </Link>
 
             {/* Botón hamburguesa en móvil */}
@@ -20,8 +21,8 @@ const Navbar = () => {
             >
                 <span className="material-symbols-outlined text-3xl">
                     {isOpen
-                        ? <span class="material-symbols-outlined text-white">close</span>
-                        : <span class="material-symbols-outlined text-white">menu</span>
+                        ? <span className="material-symbols-outlined text-white">close</span>
+                        : <span className="material-symbols-outlined text-white">menu</span>
                     }
                 </span>
             </button>

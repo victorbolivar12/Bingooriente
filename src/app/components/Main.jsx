@@ -26,7 +26,7 @@ const Main = () => {
                     </p>
 
                     {/* Botón principal */}
-                    <Link href="/comprar">
+                    <Link href="/Seleccionar-Carton">
                         <button className="bg-[#A81F16] hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg transition w-full">
                             COMPRAR CARTÓN
                         </button>
