@@ -2,8 +2,8 @@
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { ChangeEvent } from "react";
 import { useSearchParams } from "next/navigation";
+
 
 
 export default function BingoPaymentForm() {
@@ -125,7 +125,7 @@ export default function BingoPaymentForm() {
                         className="w-full p-2 border border-[#8E8989] rounded text-black bg-white"
 
                     />
-                    
+
                 </div>
 
                 <button
