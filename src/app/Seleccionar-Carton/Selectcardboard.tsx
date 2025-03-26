@@ -48,7 +48,7 @@ export default function CartonesSelector() {
       <h2 className="text-center text-white text-2xl font-bold">SELECCIONA TUS CARTONES</h2>
       <p className="text-center text-white">Puedes seleccionar uno o varios cartones</p>
 
-      <div className="grid grid-cols-5 md:grid-cols-18 gap-5 mt-6">
+      <div className="grid grid-cols-5 md:grid-cols-15 gap-5 mt-6">
         {cartones.map((carton) => (
           <button
             key={carton.id}

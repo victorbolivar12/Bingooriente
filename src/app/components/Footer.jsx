@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from 'next/image';
 
 const Footer = () => {
   return (
@@ -10,7 +11,9 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 mb-4">
           <Link href="#" className="hover:underline">Inicio</Link>
           <Link href="#" className="hover:underline">Cartones</Link>
-          <img src="/logo.png" alt="Bingoriente Logo" className="h-10" />
+          <Link href="/">
+            <Image src="/LOGO.png" alt="Logo Bingoriente" width={250} height={250} className="w-40 lg:w-60 cursor-pointer" />
+          </Link>
           <Link href="#" className="hover:underline">Testimonios</Link>
           <Link href="#" className="hover:underline">Contacto</Link>
         </div>
