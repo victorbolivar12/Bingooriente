@@ -31,10 +31,7 @@ body {
   'GRAD' 0,
   'opsz' 24
 }
-/* 
-.bg-img {
-  position: relative;
-  background: linear-gradient(rgba(217, 128, 25, 0.7), rgba(217, 128, 25, 1)), url("../../public/bg.png");
-  background-size: cover;
-  background-position: center;
-} */
+
+.nextjs-toast {
+  display:none;
+}

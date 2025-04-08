@@ -21,8 +21,8 @@ const Navbar = () => {
             >
                 <span className="material-symbols-outlined text-3xl">
                     {isOpen
-                        ? <span className="material-symbols-outlined text-white">close</span>
-                        : <span className="material-symbols-outlined text-white">menu</span>
+                        ? <Image src="/cerrar.png" alt="Icono de cerrar" width={20} height={20} className="cursor-pointer" />
+                        : <Image src="/menu.png" alt="Icono de menu" width={30} height={30} className="cursor-pointer" />
                     }
                 </span>
             </button>
@@ -32,7 +32,7 @@ const Navbar = () => {
                 <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Seleccionar-Carton">Comprar</Link></li>
                 <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Buscar-Carton">Cartones</Link></li>
                 <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Testimonios">Testimonios</Link></li>
-                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="#">Contacto</Link></li>
+                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Contacto">Contacto</Link></li>
             </ul>
         </nav>
     );

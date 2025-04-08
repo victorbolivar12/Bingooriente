@@ -27,7 +27,7 @@ const Main = () => {
 
                     {/* Botón principal */}
                     <Link href="/Seleccionar-Carton">
-                        <button className="bg-[#A81F16] hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg transition w-full">
+                        <button className="bg-gradient-to-r from-yellow-400 to-red-600 hover:from-yellow-500 hover:to-red-700 border border-white text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg transition w-full cursor-pointer">
                             COMPRAR CARTÓN
                         </button>
                     </Link>
