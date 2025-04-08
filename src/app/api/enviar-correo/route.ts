@@ -57,7 +57,7 @@ export async function POST(req: Request) {
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: "victorandres.bolivar@gmail.com",
+            to: "Bingoriente@gmail.com",
             subject: 'Confirmación de compra',
             html: `
                 <div style="text-align: center; padding: 20px;">
