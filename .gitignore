@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# imgenes
+/public/CARTONES_JPG_1200
+
