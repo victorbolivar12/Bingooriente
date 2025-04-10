@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 
 type FormValues = {
     name: string;
@@ -21,28 +21,28 @@ export default function BingoPaymentForm() {
     const cartones = JSON.parse(searchParams.get("cartones") || "[]");
     const total = searchParams.get("total") || 0;
     const router = useRouter();
+    const [isLoading, setIsloading] = useState<boolean>(false)
 
     const handleSubmit = async (values: FormValues) => {
+        setIsloading(true);
         try {
             const formData = new FormData();
             formData.append("nombre", values.name);
             formData.append("telefono", values.phone);
             formData.append("correo", values.email);
             formData.append("referencia_pago", values.reference);
-            formData.append("receipt", values.receipt); // Append the File object
-            formData.append("cartones", JSON.stringify(cartones)); // Stringify cartones
-
-            // Confirmacion de pago
+            formData.append("receipt", values.receipt);
+            formData.append("cartones", JSON.stringify(cartones));
+    
             const response2 = await fetch("api/enviar-correo", {
                 method: "POST",
-                body: formData, // Send FormData, not JSON
+                body: formData,
             });
-
+    
             if (!response2.ok) {
                 throw new Error("Error al enviar los datos");
             }
-
-            // registro en la base de datos
+    
             const response = await fetch("api/comprar-cartones", {
                 method: "POST",
                 headers: {
@@ -56,20 +56,20 @@ export default function BingoPaymentForm() {
                     cartones,
                 }),
             });
-
+    
             if (!response.ok) {
                 throw new Error("Error al enviar los datos");
             }
-
+    
             Swal.fire({
                 title: '¡Éxito!',
                 text: 'Datos enviados correctamente.',
                 icon: 'success',
                 confirmButtonText: 'Ok'
             }).then(() => {
-                router.push('/'); // Redirect if needed
+                router.push('/');
             });
-
+    
         } catch (error) {
             console.error("Error en la solicitud:", error);
             Swal.fire({
@@ -78,8 +78,11 @@ export default function BingoPaymentForm() {
                 icon: 'error',
                 confirmButtonText: 'Ok'
             });
+        } finally {
+            setIsloading(false);
         }
     };
+    
 
     const formik = useFormik<FormValues>({
         initialValues: {
@@ -109,6 +112,12 @@ export default function BingoPaymentForm() {
             formik.setFieldValue("receipt", event.currentTarget.files[0]);
         }
     };
+
+    {isLoading && (
+        <div className="fixed bottom-4 right-4 bg-yellow-500 text-white px-4 py-2 rounded shadow-lg z-50 animate-pulse">
+            Procesando pago...
+        </div>
+    )}
 
     return (
         <div className="w-full mx-auto p-6 md:px-20 my-5 rounded-lg text-white">
