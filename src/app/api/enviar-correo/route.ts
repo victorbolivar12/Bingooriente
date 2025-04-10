@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import fs from 'fs/promises';
-import path from 'path';
-import crypto from 'crypto';
 
 export async function POST(req: Request) {
     try {
@@ -17,31 +14,21 @@ export async function POST(req: Request) {
 
         const cartones = JSON.parse(cartonesString);
         const numeroCartones = cartones.length;
-        const monto = numeroCartones * parseInt(process.env.NEXT_PUBLIC_PRECIO_POR_CARTON);
+        const monto = numeroCartones * parseInt(process.env.NEXT_PUBLIC_PRECIO_POR_CARTON || '0');
 
         let attachment = [];
         let imageCid = '';
         let imageSrc = '';
-        let savedFilePath = '';
 
         if (receiptFile) {
-            const originalFilename = receiptFile.name;
-            const fileExtension = path.extname(originalFilename);
-            const uniqueFilename = `${crypto.randomBytes(16).toString('hex')}${fileExtension}`;
-            const uploadPath = path.join(process.cwd(), 'public', 'uploads', uniqueFilename);
-
-            await fs.mkdir(path.join(process.cwd(), 'public', 'uploads'), { recursive: true });
-
             const fileBuffer = await receiptFile.arrayBuffer();
-            await fs.writeFile(uploadPath, Buffer.from(fileBuffer));
-
-            savedFilePath = `/uploads/${uniqueFilename}`;
 
             imageCid = 'receiptImage';
             imageSrc = `cid:${imageCid}`;
+
             attachment = [{
-                filename: originalFilename,
-                path: uploadPath,
+                filename: receiptFile.name,
+                content: Buffer.from(fileBuffer),
                 cid: imageCid,
                 contentType: receiptFile.type,
             }];
@@ -55,13 +42,15 @@ export async function POST(req: Request) {
             },
         });
 
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: "Bingoriente@gmail.com",
+            to: process.env.EMAIL_DESTINO,
             subject: 'Confirmación de compra',
             html: `
                 <div style="text-align: center; padding: 20px;">
-                    <h3 style="color: #333;">COMPRA REALIZADA CON EXITO</h3>
+                    <h3 style="color: #333;">COMPRA REALIZADA CON ÉXITO</h3>
                 </div>
                 <div style="font-family: Arial, sans-serif; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
                     <p><strong>Nombre:</strong> ${nombre}</p>
@@ -70,10 +59,10 @@ export async function POST(req: Request) {
                     <p><strong>Monto:</strong> $${monto}</p>
                     <p><strong>Referencia de pago:</strong> ${referencia_pago}</p>
                     <p><strong>Cartones comprados:</strong> ${cartones.join(', ')}</p>
-                    ${savedFilePath ? `<p><strong>Imagen del comprobante:</strong> <img src="${imageSrc}" alt="Comprobante" style="max-width: 300px;"/></p>` : '<p><strong>No se adjuntó comprobante</strong></p>'}
+                    ${receiptFile ? `<p><strong>Comprobante:</strong> <img src="${imageSrc}" alt="Comprobante" style="max-width: 300px;" /></p>` : '<p><strong>No se adjuntó comprobante</strong></p>'}
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
-                    <a href="http://localhost:3000/api/confirmar-pago?cartones=${cartones}"
+                    <a href="${baseUrl}/api/confirmar-pago?cartones=${encodeURIComponent(cartones)}"
                         style="display: inline-block; background-color: #28a745; color: #fff; padding: 10px 20px;
                                 font-size: 16px; text-decoration: none; border-radius: 5px;">
                         Confirmar Pago
