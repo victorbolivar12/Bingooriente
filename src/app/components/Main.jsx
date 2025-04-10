@@ -41,12 +41,17 @@ const Main = () => {
 
             {/* Sección "ÚNETE | JUEGA | GANA" */}
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-                <Link href="/juego">
-                    <button className="bg-red-800 hover:bg-red-900 text-white font-semibold py-2 px-4 rounded-t-lg uppercase tracking-wider w-90">
+                <a
+                    href="https://chat.whatsapp.com/Lew8T4ogHYj9MUdlHSpiBU"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <button className="bg-red-800 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-t-lg uppercase tracking-wider w-90 cursor-pointer">
                         ÚNETE | JUEGA | GANA
                     </button>
-                </Link>
+                </a>
             </div>
+
         </section>
     );
 };

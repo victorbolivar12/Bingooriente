@@ -28,13 +28,13 @@ const ContactPage = () => {
                     </div>
 
                     <div className="flex justify-center gap-6 mt-4">
-                        <a href="https://facebook.com/bingOriente" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.facebook.com/groups/1085783173591390" target="_blank" rel="noopener noreferrer">
                             <Image src="/icons/facebook.png" alt="Facebook" width={24} height={24} className="hover:scale-110 transition-transform" />
                         </a>
                         <a href="https://www.instagram.com/bingoriente/?hl=es" target="_blank" rel="noopener noreferrer">
                             <Image src="/icons/instagram.png" alt="Instagram" width={24} height={24} className="hover:scale-110 transition-transform" />
                         </a>
-                        <a href="https://youtube.com/@BingOriente" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.youtube.com/@bingoriente" target="_blank" rel="noopener noreferrer">
                             <Image src="/icons/youtube.png" alt="YouTube" width={24} height={24} className="hover:scale-110 transition-transform" />
                         </a>
                         <p className='text-gray-600'>@bingOriente</p>

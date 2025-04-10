@@ -9,13 +9,13 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         {/* Menú de navegación */}
         <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 mb-4">
-          <Link href="#" className="hover:underline">Inicio</Link>
-          <Link href="#" className="hover:underline">Cartones</Link>
+          <Link href="/" className="hover:underline">Inicio</Link>
+          <Link href="/Buscar-Carton" className="hover:underline">Cartones</Link>
           <Link href="/">
             <Image src="/LOGO.png" alt="Logo Bingoriente" width={250} height={250} className="w-40 lg:w-60 cursor-pointer" />
           </Link>
-          <Link href="#" className="hover:underline">Testimonios</Link>
-          <Link href="#" className="hover:underline">Contacto</Link>
+          <Link href="/Testimonios" className="hover:underline">Testimonios</Link>
+          <Link href="/Contacto" className="hover:underline">Contacto</Link>
         </div>
 
         {/* Línea divisoria */}
@@ -29,7 +29,7 @@ const Footer = () => {
         </div>
 
         {/* Derechos reservados */}
-        <p className="text-sm">© BINGOORIENTE, 2025. TODOS LOS DERECHOS RESERVADOS</p>
+        <p className="text-sm">© BINGORIENTE, 2025. TODOS LOS DERECHOS RESERVADOS</p>
       </div>
     </footer>
   );
