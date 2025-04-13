@@ -1,9 +1,15 @@
 @import "tailwindcss";
+@import "tailwindcss-animated";
 
 :root {
   --background: #950F0F;
   --foreground: #D98019;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
 
 @theme inline {
   --color-background: var(--background);

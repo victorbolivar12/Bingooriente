@@ -25,7 +25,7 @@ export default function Modal({ isOpen, onClose, onSelect, cartonId }: ModalProp
     : "/placeholder.jpg"; // Imagen por defecto si cartonId es null
 
   return (
-    <div className="fixed inset-0 backdrop-blur-xs flex items-center justify-center z-50">
+    <div className="fixed inset-0 backdrop-blur-xs flex items-center justify-center z-50 animate-fade-up animate-duration-500">
       <div className="bg-white p-6 rounded-lg w-96 h-auto text-center shadow-lg">
         <h2 className="text-lg font-bold text-black">Detalles del Cartón</h2>
         <p className="mt-2 text-black">ID del Cartón: {cartonId < 10 ? "0000" : "000"}{cartonId}</p>

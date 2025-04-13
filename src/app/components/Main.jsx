@@ -21,13 +21,13 @@ const Main = () => {
                     </h1>
                     <p className="text-lg md:text-xl mb-6">
                         Únete a nuestras partidas a las <strong>7:00 PM</strong> vía YouTube, con un costo de
-                        participación de <strong>50 Bs.</strong> por cartón y la oportunidad de ganar un
+                        participación de <strong>100 Bs.</strong> por cartón y la oportunidad de ganar un
                         premio diario de <strong>500 USD</strong> a repartir.
                     </p>
 
                     {/* Botón principal */}
                     <Link href="/Seleccionar-Carton">
-                        <button className="bg-gradient-to-r from-yellow-400 to-red-600 hover:from-yellow-500 hover:to-red-700 border border-white text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg transition w-full cursor-pointer">
+                        <button className="bg-gradient-to-r from-yellow-400 to-red-600 hover:from-yellow-500 hover:to-red-700 border border-white text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg transition w-full cursor-pointer hover:animate-jump animate-ease-out">
                             COMPRAR CARTÓN
                         </button>
                     </Link>

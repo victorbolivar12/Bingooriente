@@ -24,6 +24,7 @@
     "serverless-mysql": "^2.1.0",
     "sweetalert2": "^11.17.2",
     "tailwind-variants": "^1.0.0",
+    "tailwindcss-animated": "^2.0.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {

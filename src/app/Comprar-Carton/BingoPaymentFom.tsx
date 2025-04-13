@@ -33,16 +33,16 @@ export default function BingoPaymentForm() {
             formData.append("referencia_pago", values.reference);
             formData.append("receipt", values.receipt);
             formData.append("cartones", JSON.stringify(cartones));
-    
+
             const response2 = await fetch("api/enviar-correo", {
                 method: "POST",
                 body: formData,
             });
-    
+
             if (!response2.ok) {
                 throw new Error("Error al enviar los datos");
             }
-    
+
             const response = await fetch("api/comprar-cartones", {
                 method: "POST",
                 headers: {
@@ -56,20 +56,31 @@ export default function BingoPaymentForm() {
                     cartones,
                 }),
             });
-    
+
             if (!response.ok) {
                 throw new Error("Error al enviar los datos");
             }
-    
+
             Swal.fire({
-                title: '¡Éxito!',
-                text: 'Datos enviados correctamente.',
+                title: '¡Ya estás participando! 🎉',
+                html: `
+                    <p>Descarga tu cartón y únete al juego.</p>
+                    <p>¡Mucha suerte! 🍀</p>
+                `,
                 icon: 'success',
-                confirmButtonText: 'Ok'
-            }).then(() => {
-                router.push('/');
+                showCancelButton: true,
+                confirmButtonText: 'Descargar Cartón',
+                cancelButtonText: 'Volver al inicio',
+                confirmButtonColor: '#28a745',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    router.push('/Buscar-Carton'); 
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    router.push('/'); 
+                }
             });
-    
+
+
         } catch (error) {
             console.error("Error en la solicitud:", error);
             Swal.fire({
@@ -82,7 +93,7 @@ export default function BingoPaymentForm() {
             setIsloading(false);
         }
     };
-    
+
 
     const formik = useFormik<FormValues>({
         initialValues: {
@@ -113,14 +124,15 @@ export default function BingoPaymentForm() {
         }
     };
 
-    {isLoading && (
-        <div className="fixed bottom-4 right-4 bg-yellow-500 text-white px-4 py-2 rounded shadow-lg z-50 animate-pulse">
-            Procesando pago...
-        </div>
-    )}
 
     return (
         <div className="w-full mx-auto p-6 md:px-20 my-5 rounded-lg text-white">
+            {isLoading && (
+                <div className="fixed sm:w-84 bottom-4 right-4 bg-red-800 border-2 border-white text-white px-4 py-2 rounded shadow-lg z-50 font-light animate-fade-up">
+                    <span className="font-bold">PROCESANDO PAGO!</span> <br />
+                    Esto puede tardar unos minutos...
+                </div>
+            )}
             <h2 className="text-xl sm:text-3xl font-bold text-center">REALIZA TU PAGO Y ENVIA TUS DATOS</h2>
             <p className="text-sm md:text-xl text-center">Te contactamos a través de tu número de teléfono</p>
 
@@ -159,7 +171,7 @@ export default function BingoPaymentForm() {
                             value={formik.values.name}
                         />
                         {formik.touched.name && formik.errors.name && (
-                            <p className="text-red-500 text-sm">{formik.errors.name}</p>
+                            <p className="text-white text-sm">{formik.errors.name}</p>
                         )}
                     </div>
 
@@ -173,7 +185,7 @@ export default function BingoPaymentForm() {
                             value={formik.values.phone}
                         />
                         {formik.touched.phone && formik.errors.phone && (
-                            <p className="text-red-500 text-sm">{formik.errors.phone}</p>
+                            <p className="text-white text-sm">{formik.errors.phone}</p>
                         )}
                     </div>
                 </div>
@@ -189,7 +201,7 @@ export default function BingoPaymentForm() {
                         value={formik.values.email}
                     />
                     {formik.touched.email && formik.errors.email && (
-                        <p className="text-red-500 text-sm">{formik.errors.email}</p>
+                        <p className="text-white text-sm">{formik.errors.email}</p>
                     )}
                 </div>
 
@@ -205,7 +217,7 @@ export default function BingoPaymentForm() {
                         value={formik.values.reference}
                     />
                     {formik.touched.reference && formik.errors.reference && (
-                        <p className="text-red-500 text-sm">{formik.errors.reference}</p>
+                        <p className="text-white text-sm">{formik.errors.reference}</p>
                     )}
                 </div>
 
@@ -217,12 +229,14 @@ export default function BingoPaymentForm() {
                         className="w-full p-2 border border-[#8E8989] rounded text-black bg-white"
                         onChange={handleFileChange}
                     />
-
+                    {formik.touched.receipt && formik.errors.reference && (
+                        <p className="text-white text-sm">{formik.errors.reference}</p>
+                    )}
                 </div>
 
                 <button
                     type="submit"
-                    className="mt-10 w-full bg-yellow-500 text-white py-2 rounded font-bold hover:bg-yellow-600"
+                    className="mt-10 w-full bg-yellow-500 text-white py-2 rounded font-bold hover:bg-yellow-600 cursor-pointer transition"
                 >
                     Enviar
                 </button>
