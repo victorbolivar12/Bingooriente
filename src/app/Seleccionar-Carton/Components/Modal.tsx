@@ -36,6 +36,7 @@ export default function Modal({ isOpen, onClose, onSelect, cartonId }: ModalProp
             width={384}
             height={384}
             className="rounded-md"
+            unoptimized
           />
         </div>
         <div className="flex justify-between mt-14">
