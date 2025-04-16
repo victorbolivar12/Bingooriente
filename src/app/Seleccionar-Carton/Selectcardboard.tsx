@@ -3,49 +3,55 @@ import { useState, useEffect } from "react";
 import Modal from "./Components/Modal";
 import Button from "./Components/Button";
 import { useRouter } from "next/navigation";
-import Loading from "../components/Loading"; // Importa el componente Loading
+import Loading from "../components/Loading";
 
 export default function CartonesSelector() {
   const [selectedCarton, setSelectedCarton] = useState<number | null>(null);
   const [selectedCartones, setSelectedCartones] = useState<number[]>([]);
   const [cartones, setCartones] = useState([]);
-  //const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // Estado de carga
+  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Verificar que el precio es un número válido, parseado desde el archivo .env
-  const PRECIO_POR_CARTON = parseFloat(process.env.NEXT_PUBLIC_PRECIO_POR_CARTON || "0");
-
-  const fecha = new Date()
-  const fechaActual = fecha.toLocaleDateString("es-MX",{ weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  const [precioCarton, setPrecioCarton] = useState<number | null>(null); // Precio desde la API
 
   const router = useRouter();
 
+  const fecha = new Date();
+  const fechaActual = fecha.toLocaleDateString("es-MX", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
   useEffect(() => {
-    const fetchCartones = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('api/cartones');
-        if (!response.ok) {
-          throw new Error('Error al recuperar los cartones');
+        const [cartonesRes, configRes] = await Promise.all([
+          fetch("/api/cartones"),
+          fetch("/api/configuracion"),
+        ]);
+
+        if (!cartonesRes.ok || !configRes.ok) {
+          throw new Error("Error al obtener datos.");
         }
 
-        // Obtener los datos de la respuesta
-        const data = await response.json();
+        const cartonesData = await cartonesRes.json();
+        const configData = await configRes.json();
 
-        // Establecer los datos en el estado
-        setCartones(data.cartones);
+        setCartones(cartonesData.cartones);
+        setPrecioCarton(configData.precio_carton); // Asignar precio desde config
       } catch (error) {
-        //setError(error.message); // Establecer el mensaje de error en el estado
+        console.error("Error al obtener datos:", error);
       } finally {
-        setLoading(false); // Finaliza la carga
+        setLoading(false);
       }
     };
 
-    // Llamada a la función para obtener los cartones
-    fetchCartones();
+    fetchData();
   }, []);
 
   const handleGoToPay = () => {
+    const total = selectedCartones.length * (precioCarton ?? 0);
     router.push(
       `/Comprar-Carton?cartones=${JSON.stringify(selectedCartones)}&total=${total}`
     );
@@ -61,14 +67,21 @@ export default function CartonesSelector() {
   };
 
   const handleSelectCarton = () => {
-    if (selectedCarton !== null && !selectedCartones.includes(selectedCarton)) {
+    if (selectedCarton === null) return;
+  
+    if (selectedCartones.includes(selectedCarton)) {
+      // Si ya está seleccionado, lo quitamos
+      setSelectedCartones(selectedCartones.filter(id => id !== selectedCarton));
+    } else {
+      // Si no está seleccionado, lo añadimos
       setSelectedCartones([...selectedCartones, selectedCarton]);
     }
+  
     setIsModalOpen(false);
   };
+  
 
-  // Calcular el total, validando que el precio sea un número válido
-  const total = selectedCartones.length * PRECIO_POR_CARTON; // Calcular total
+  const total = selectedCartones.length * (precioCarton ?? 0);
 
   return (
     <div className="p-4 sm:px-16 bg-[#950F0F] min-h-screen">
@@ -76,17 +89,17 @@ export default function CartonesSelector() {
       <p className="text-center text-white">Puedes seleccionar uno o varios cartones</p>
       <p>Fecha de sorteo: {fechaActual}</p>
 
-      {/* Mostrar el componente Loading mientras los cartones se están cargando */}
-      {loading ? (
-        <Loading /> // Aquí se muestra el componente de carga
+      {loading || precioCarton === null ? (
+        <Loading />
       ) : (
         <>
-          {/* Muestra los cartones solo cuando se haya terminado de cargar */}
           <div className="grid grid-cols-5 md:grid-cols-15 gap-3 md:gap-5 mt-6">
             {cartones.map((carton) => (
               <button
                 key={carton.id_carton}
-                className={`w-16 h-16 bg-[#D98019] cursor-pointer text-white border border-white rounded-md font-bold ${selectedCartones.includes(carton.id_carton) ? "bg-green-500" : ""}`}
+                className={`w-16 h-16 bg-[#D98019] cursor-pointer text-white border border-white rounded-md font-bold ${
+                  selectedCartones.includes(carton.id_carton) ? "bg-green-500" : ""
+                }`}
                 onClick={() => handleOpenModal(carton.id_carton)}
               >
                 {carton.id_carton}
@@ -100,11 +113,10 @@ export default function CartonesSelector() {
                 className="w-full text-2xl font-semibold text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl bg-gradient-to-r from-yellow-400 to-red-600 hover:from-yellow-500 hover:to-red-700 focus:outline-none border-2 border-white cursor-pointer"
                 onClick={handleGoToPay}
               >
-                IR A PAGAR {selectedCartones.length} CARTONES ({total}bs)
+                IR A PAGAR {selectedCartones.length} CARTONES ({total} Bs)
               </Button>
             </div>
           )}
-
 
           <Modal
             isOpen={isModalOpen}

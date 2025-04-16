@@ -128,7 +128,7 @@ export default function BingoPaymentForm() {
     return (
         <div className="w-full mx-auto p-6 md:px-20 my-5 rounded-lg text-white">
             {isLoading && (
-                <div className="fixed sm:w-84 bottom-4 right-4 bg-red-800 border-2 border-white text-white px-4 py-2 rounded shadow-lg z-50 font-light animate-fade-up">
+                <div className="fixed sm:w-84 bottom-4 right-4 bg-yellow-600 border-2 border-white text-white px-4 py-2 rounded shadow-lg z-50 font-light animate-fade-up">
                     <span className="font-bold">PROCESANDO PAGO!</span> <br />
                     Esto puede tardar unos minutos...
                 </div>

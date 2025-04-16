@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { conn } from '@/libs/mysql';
+
 
 export async function POST(req: Request) {
     try {
@@ -14,7 +16,10 @@ export async function POST(req: Request) {
 
         const cartones = JSON.parse(cartonesString);
         const numeroCartones = cartones.length;
-        const monto = numeroCartones * parseInt(process.env.NEXT_PUBLIC_PRECIO_POR_CARTON || '0');
+        const result = await conn.query('SELECT precio_carton FROM configuracion LIMIT 1') as { precio_carton: number }[];
+        const precioPorCarton = result[0]?.precio_carton || 0;
+        const monto = numeroCartones * precioPorCarton;
+
 
         let attachment = [];
         let imageCid = '';
