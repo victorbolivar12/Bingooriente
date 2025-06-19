@@ -3,12 +3,52 @@
 import Image from "next/image";
 
 const HowToPlay = () => {
+
+
   return (
     <section className="bg-[#D98019] text-white py-12 px-6 relative">
       <div className="max-w-4xl mx-auto text-center">
+
+        <div className="flex justify-center w-full gap-10">
+          <video
+            controls
+            preload="none"
+            className="h-[640px] w-[350px] mb-8"
+            poster="/poster1.jpg"
+          >
+            <source src="/VideoInstrucciones.mp4" type="video/mp4" />
+            <track
+              src="/VideoInstrucciones.mp4"
+              kind="subtitles"
+              srcLang="es"
+              label="Spanish"
+            />
+            Su navegador no soporta la etiqueta de vídeo.
+          </video>
+
+          <video
+            controls
+            preload="none"
+            className="h-[640px] w-[350px] hidden sm:block"
+            poster="/poster2.jpg"
+
+          >
+            <source src="/publicidad.mp4" type="video/mp4" />
+            <track
+              src="/publicidad.mp4"
+              kind="subtitles"
+              srcLang="es"
+              label="Spanish"
+            />
+            Su navegador no soporta la etiqueta de vídeo.
+          </video>
+        </div>
+
+
         {/* Título */}
         <h2 className="text-3xl md:text-4xl font-bold mb-4">¿CÓMO SE JUEGA?</h2>
-        <p className="text-lg md:text-xl mb-8">
+
+        <p className="text-lg md:text-xl mb-8 mt-8">
           Aquí te explicamos todos los pasos que debes seguir para unirte al juego
         </p>
 
@@ -28,7 +68,7 @@ const HowToPlay = () => {
             <Image src="/payment.png" width={50} height={50} alt="Pago" />
             <div>
               <h3 className="font-bold text-xl">Paso 2:</h3>
-              <p>Paga el cartón a través de un pago móvil (90.00bs)</p>
+              <p>Paga el cartón a través de un pago móvil</p>
             </div>
           </div>
 
