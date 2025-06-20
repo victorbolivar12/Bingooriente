@@ -140,7 +140,7 @@ export default function BingoPaymentForm() {
                 <h3 className="font-bold text-[#D98019]">PAGO MOVIL:</h3>
                 <p className="p-1.5"><strong>Banco:</strong> Venezuela</p>
                 <p className="p-1.5"><strong>Teléfono:</strong> 04121173414 </p>
-                <p className="p-1.5"><strong>Cédula:</strong> 13.927.819</p>
+                <p className="p-1.5"><strong>Cédula:</strong> 04249528298</p>
                 <p className="p-1.5"><strong>Monto a pagar:</strong>{total}bs</p>
                 {/* Línea divisoria */}
                 <div className="border-t border-black w-full mx-auto my-4"></div>
