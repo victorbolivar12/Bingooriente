@@ -6,7 +6,7 @@ const HowToPlay = () => {
 
 
   return (
-    <section className="bg-[#D98019] text-white py-12 px-6 relative">
+    <section className="bg-[#D98019] text-white py-12 px-6 relative z-0">
       <div className="max-w-4xl mx-auto text-center">
 
         <div className="flex justify-center w-full gap-10">

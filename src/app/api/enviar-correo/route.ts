@@ -49,6 +49,9 @@ export async function POST(req: Request) {
 
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
+        const cartonesParam = encodeURIComponent(cartones.join(','));
+
+
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: process.env.EMAIL_DESTINO,
@@ -67,7 +70,7 @@ export async function POST(req: Request) {
                     ${receiptFile ? `<p><strong>Comprobante:</strong> <img src="${imageSrc}" alt="Comprobante" style="max-width: 300px;" /></p>` : '<p><strong>No se adjuntó comprobante</strong></p>'}
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
-                    <a href="${baseUrl}/api/confirmar-pago?cartones=${encodeURIComponent(cartones)}"
+                    <a href="${baseUrl}/api/confirmar-pago?cartones=${cartonesParam}"
                         style="display: inline-block; background-color: #28a745; color: #fff; padding: 10px 20px;
                                 font-size: 16px; text-decoration: none; border-radius: 5px;">
                         Confirmar Pago

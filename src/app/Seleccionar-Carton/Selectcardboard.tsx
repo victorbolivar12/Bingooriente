@@ -68,7 +68,7 @@ export default function CartonesSelector() {
 
   const handleSelectCarton = () => {
     if (selectedCarton === null) return;
-  
+
     if (selectedCartones.includes(selectedCarton)) {
       // Si ya está seleccionado, lo quitamos
       setSelectedCartones(selectedCartones.filter(id => id !== selectedCarton));
@@ -76,10 +76,10 @@ export default function CartonesSelector() {
       // Si no está seleccionado, lo añadimos
       setSelectedCartones([...selectedCartones, selectedCarton]);
     }
-  
+
     setIsModalOpen(false);
   };
-  
+
 
   const total = selectedCartones.length * (precioCarton ?? 0);
 
@@ -97,9 +97,8 @@ export default function CartonesSelector() {
             {cartones.map((carton) => (
               <button
                 key={carton.id_carton}
-                className={`w-16 h-16 bg-[#D98019] cursor-pointer text-white border border-white rounded-md font-bold ${
-                  selectedCartones.includes(carton.id_carton) ? "bg-green-500" : ""
-                }`}
+                className={`w-16 h-16 bg-[#D98019] cursor-pointer text-white border border-white rounded-md font-bold ${selectedCartones.includes(carton.id_carton) ? "bg-green-500" : ""
+                  }`}
                 onClick={() => handleOpenModal(carton.id_carton)}
               >
                 {carton.id_carton}
@@ -115,6 +114,12 @@ export default function CartonesSelector() {
               >
                 IR A PAGAR {selectedCartones.length} CARTONES ({total} Bs)
               </Button>
+            </div>
+          )}
+
+          {selectedCartones.length >= 3 && (
+            <div className="fixed sm:w-84 bottom-4 right-4 bg-yellow-600 border-2 border-white text-white px-4 py-2 rounded shadow-lg z-50 font-light animate-fade-up">
+              <span className="font-bold">SI CONFIRMAS TU COMPRA ESTAS PARTICIPANDO EN UN SORTEO DE 200bs</span> <br />
             </div>
           )}
 

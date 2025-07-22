@@ -46,7 +46,7 @@ const Testimonials = () => {
                 <video
                     controls
                     preload="none"
-                    className="h-[640px] w-[350px] hidden sm:block"
+                    className="h-[640px] w-[350px]"
                     poster="/poster2.jpg"
 
                 >

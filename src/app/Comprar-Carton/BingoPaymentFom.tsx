@@ -13,6 +13,7 @@ type FormValues = {
     email: string;
     reference: string;
     receipt: File | null;
+    code: string;
 };
 
 
@@ -33,6 +34,7 @@ export default function BingoPaymentForm() {
             formData.append("referencia_pago", values.reference);
             formData.append("receipt", values.receipt);
             formData.append("cartones", JSON.stringify(cartones));
+            formData.append("code", values.code);
 
             const response2 = await fetch("api/enviar-correo", {
                 method: "POST",
@@ -54,6 +56,7 @@ export default function BingoPaymentForm() {
                     correo: values.email,
                     referencia_pago: values.reference,
                     cartones,
+                    code: values.code,
                 }),
             });
 
@@ -74,9 +77,9 @@ export default function BingoPaymentForm() {
                 confirmButtonColor: '#28a745',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    router.push('/Buscar-Carton'); 
+                    router.push('/Buscar-Carton');
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    router.push('/'); 
+                    router.push('/');
                 }
             });
 
@@ -102,6 +105,7 @@ export default function BingoPaymentForm() {
             email: "",
             reference: "",
             receipt: null as File | null,
+            code: ""
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Campo requerido"),
@@ -111,6 +115,10 @@ export default function BingoPaymentForm() {
                 .length(4, "Debe tener 4 dígitos")
                 .required("Campo requerido"),
             receipt: Yup.mixed<File>().required("Sube el comprobante"),
+            code: Yup.string()
+                .matches(/^\d{4}[\W_]$/, "Debe contener exactamente 4 números seguidos de un signo")
+                .required("Campo requerido"),
+
         }),
         onSubmit: (values) => {
             handleSubmit(values);
@@ -233,6 +241,28 @@ export default function BingoPaymentForm() {
                         <p className="text-white text-sm">{formik.errors.reference}</p>
                     )}
                 </div>
+
+                {cartones.length >= 3 && (
+                    <>
+                        <h2 className="text-xl text-white font-bold my-5">DATOS DEL SORTEO</h2>
+
+                        <div className="mt-2">
+                            <label className="block">
+                                Ingrese un número de 4 dígitos más un signo como +, #, @, *, etc. Ejemplo: 1234+
+                            </label>
+                            <input
+                                type="text"
+                                name="code"
+                                className="w-full p-2 border border-[#8E8989] rounded text-black bg-white"
+                                onChange={formik.handleChange}
+                                value={formik.values.code}
+                            />
+                            {formik.touched.code && formik.errors.code && (
+                                <p className="text-white text-sm">{formik.errors.code}</p>
+                            )}
+                        </div>
+                    </>
+                )}
 
                 <button
                     type="submit"

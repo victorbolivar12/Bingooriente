@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req) {
   if (req.method === 'POST') {
-    const { nombre, telefono, correo, referencia_pago, imagen_comprobante, cartones } = await req.json(); // Utiliza req.json() para obtener los datos de la solicitud
+    const { nombre, telefono, correo, referencia_pago, imagen_comprobante, cartones, code } = await req.json(); // Utiliza req.json() para obtener los datos de la solicitud
 
     try {
       // Paso 1: Insertar cliente
@@ -32,6 +32,11 @@ export async function POST(req) {
         return conn.query(updateCartonQuery, ['pendiente confirmación', idCarton]);
       });
       await Promise.all(actualizarCartonesPromises);
+
+      // Paso 5: Insartar los datos en la tabla sorteos si es necesario
+      const sorteoQuery = 'INSERT INTO sorteo (nombre, codigo) VALUES (?, ?)';
+      const sorteoValues = [nombre, code];
+      const sorteoResult = await conn.query(sorteoQuery, sorteoValues);
 
       // Confirmación de éxito
       return NextResponse.json({ message: 'Compra realizada con éxito y cartones actualizados' }, { status: 200 });
