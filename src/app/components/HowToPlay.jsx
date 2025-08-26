@@ -6,8 +6,11 @@ const HowToPlay = () => {
 
 
   return (
-    <section className="bg-[#D98019] text-white py-12 px-6 relative z-0">
+    <section className="bg-[#D98019] text-white py-5 px-6 relative z-0">
       <div className="max-w-4xl mx-auto text-center">
+
+        {/* Título */}
+        <h2 className="text-3xl md:text-4xl font-bold mb-10">¿CÓMO SE JUEGA?</h2>
 
         <div className="flex justify-center w-full gap-10">
           <video
@@ -45,8 +48,7 @@ const HowToPlay = () => {
         </div>
 
 
-        {/* Título */}
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">¿CÓMO SE JUEGA?</h2>
+
 
         <p className="text-lg md:text-xl mb-8 mt-8">
           Aquí te explicamos todos los pasos que debes seguir para unirte al juego
@@ -111,15 +113,7 @@ const HowToPlay = () => {
         </p>
       </div>
 
-      {/* Imagen de cartones (solo en pantallas grandes) */}
-      <div className="hidden md:block absolute top-0 right-0">
-        <Image src="/decorate1.png" width={250} height={250} alt="Bingo" />
-      </div>
-
-      {/* Imagen de cartones (solo en pantallas grandes) */}
-      <div className="hidden md:block absolute top-0 left-0">
-        <Image src="/decorate2.png" width={250} height={250} alt="Bolas de bingo" />
-      </div>
+      
     </section>
   );
 };

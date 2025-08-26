@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const result = await conn.query('SELECT precio_carton, numero_cartones FROM configuracion LIMIT 1');
+    const result = await conn.query('SELECT * FROM configuracion LIMIT 1');
     
     // Cierra la conexión si ya no se usará (opcional pero recomendable)
     await conn.end();

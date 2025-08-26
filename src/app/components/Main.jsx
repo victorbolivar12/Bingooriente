@@ -3,24 +3,39 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "../Seleccionar-Carton/Components/Button";
+import WelcomeBingo from "./WelcomeBingo";
 
 const Main = () => {
-  const [precio, setPrecio] = useState(null);
+  //const [precio, setPrecio] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [titulo, setTitulo] = useState("");
+  const [descripcion, setDescripcion] = useState("");
 
   useEffect(() => {
     const fetchPrecio = async () => {
       try {
         const res = await fetch("/api/configuracion");
         const data = await res.json();
-        setPrecio(data.precio_carton);
+        //setPrecio(data.precio_carton);
+        setTitulo(data.titulo);
+        setDescripcion(data.descripcion);
       } catch (error) {
         console.error("Error al obtener el precio:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPrecio();
   }, []);
+
+  console.log(titulo);
+  console.log(descripcion);
+
+  // Mientras carga, mostramos el componente de bienvenida
+  if (loading) {
+    return <WelcomeBingo />;
+  }
 
   return (
     <section
@@ -35,18 +50,20 @@ const Main = () => {
         {/* Texto */}
         <div className="text-center md:text-left flex-1">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">
-            JUEGA CON UN SOLO CARTÓN <span className="text-yellow-200">12 VECES!</span>
+            {titulo} <br />
+            {/* JUEGA CON UN SOLO CARTÓN <span className="text-yellow-200">12 VECES!</span> */}
           </h1>
           <p className="text-lg md:text-xl mb-6">
-            Únete a nuestras partidas a las <strong>7:00 PM</strong> vía YouTube, con un costo de
-            participación de{" "}
-            <strong>{precio !== null ? `${precio} Bs.` : "..."}</strong> por cartón y la oportunidad de ganar un
-            premio diario de <strong>500 USD</strong> a repartir.
+            {descripcion}
+            {/* Únete a nuestras partidas a las <strong>7:00 PM</strong> vía YouTube, con un costo de
+            participación de <strong>{precio} Bs.</strong> por cartón y la oportunidad de ganar un
+            premio diario de <strong>500 USD</strong> a repartir. */}
           </p>
+          
 
           {/* Botón principal */}
           <Link href="/Seleccionar-Carton">
-            <button className="bg-gradient-to-r from-yellow-400 to-red-600 hover:from-yellow-500 hover:to-red-700 border border-white text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg transition w-full cursor-pointer hover:animate-jump animate-ease-out">
+            <button className="bg-gradient-to-r from-yellow-400 to-red-600 hover:from-yellow-500 hover:to-red-700 border border-white text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg transition cursor-pointer w-full">
               COMPRAR CARTÓN
             </button>
           </Link>
@@ -56,7 +73,9 @@ const Main = () => {
         <div className="hidden md:block ml-8">
           <Image src="/img-main.png" width={450} height={459} alt="Cartones Bingo" />
         </div>
+
       </div>
+
 
       {/* Sección "ÚNETE | JUEGA | GANA" */}
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
@@ -65,7 +84,8 @@ const Main = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <button className="bg-red-800 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-t-lg uppercase tracking-wider w-90 cursor-pointer">
+          <button className="bg-red-800 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-t-lg uppercase tracking-wider w-90 cursor-pointer flex justify-center gap-5">
+            <Image src="/whatssapp.png" width={20} height={20} alt="whatssapp" />
             ÚNETE | JUEGA | GANA
           </button>
         </a>

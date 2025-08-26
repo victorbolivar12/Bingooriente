@@ -7,9 +7,6 @@ export async function GET() {
     const result = await conn.query('SELECT numero_cartones FROM configuracion LIMIT 1')
     const numero_cartones = result[0]?.numero_cartones || 0;
 
-    // Obtener el límite desde el archivo .env
-    //const limit = parseInt(process.env.LIMIT_CARTONES, 10) || 100; // Si no está definido, usa 100 por defecto
-
     // Consulta SQL con límite dinámico
     const query = 'SELECT * FROM cartones WHERE status = ? LIMIT ?';
     const cartones = await conn.query(query, ['disponible', numero_cartones]);

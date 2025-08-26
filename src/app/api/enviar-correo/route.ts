@@ -13,6 +13,8 @@ export async function POST(req: Request) {
         const referencia_pago = formData.get('referencia_pago') as string;
         const cartonesString = formData.get('cartones') as string;
         const receiptFile = formData.get('receipt') as File | null;
+        const codigoSorteo = formData.get('code') as string;
+        const Signo = formData.get('signo') as string;
 
         const cartones = JSON.parse(cartonesString);
         const numeroCartones = cartones.length;
@@ -68,6 +70,8 @@ export async function POST(req: Request) {
                     <p><strong>Referencia de pago:</strong> ${referencia_pago}</p>
                     <p><strong>Cartones comprados:</strong> ${cartones.join(', ')}</p>
                     ${receiptFile ? `<p><strong>Comprobante:</strong> <img src="${imageSrc}" alt="Comprobante" style="max-width: 300px;" /></p>` : '<p><strong>No se adjuntó comprobante</strong></p>'}
+                    <p><strong>Código de sorteo:</strong> ${codigoSorteo? codigoSorteo: "no participa"}</p>
+                    <p><strong>Signo del Zodiaco:</strong> ${Signo? Signo: "no participa"}</
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
                     <a href="${baseUrl}/api/confirmar-pago?cartones=${cartonesParam}"

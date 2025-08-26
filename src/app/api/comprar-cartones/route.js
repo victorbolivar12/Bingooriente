@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req) {
   if (req.method === 'POST') {
-    const { nombre, telefono, correo, referencia_pago, imagen_comprobante, cartones, code } = await req.json(); // Utiliza req.json() para obtener los datos de la solicitud
+    const { nombre, telefono, correo, referencia_pago, imagen_comprobante, cartones, code, signo } = await req.json(); // Utiliza req.json() para obtener los datos de la solicitud
 
     try {
       // Paso 1: Insertar cliente
@@ -20,11 +20,12 @@ export async function POST(req) {
       const idPago = pagoResult.insertId;
 
       // Paso 3: Insertar compras (cartones comprados)
-      const compraPromises = cartones.map((idCarton) => {
-        const compraQuery = 'INSERT INTO compras (id_pago, id_carton) VALUES (?, ?)';
-        return conn.query(compraQuery, [idPago, idCarton]);
-      });
-      await Promise.all(compraPromises);
+      const compraResults = await Promise.all(
+        cartones.map((idCarton) => {
+          const compraQuery = 'INSERT INTO compras (id_pago, id_carton) VALUES (?, ?)';
+          return conn.query(compraQuery, [idPago, idCarton]);
+        })
+      );
 
       // Paso 4: Actualizar el estado de los cartones a "pendiente confirmación"
       const actualizarCartonesPromises = cartones.map((idCarton) => {
@@ -33,10 +34,15 @@ export async function POST(req) {
       });
       await Promise.all(actualizarCartonesPromises);
 
-      // Paso 5: Insartar los datos en la tabla sorteos si es necesario
-      const sorteoQuery = 'INSERT INTO sorteo (nombre, codigo) VALUES (?, ?)';
-      const sorteoValues = [nombre, code];
-      const sorteoResult = await conn.query(sorteoQuery, sorteoValues);
+      // Paso 5: Insertar los datos en la tabla sorteo si el cliente compró 3 o más cartones
+      if (cartones.length >= 3) {
+        // Tomamos el primer id_compra insertado como referencia
+        const idCompra = compraResults[0].insertId;
+
+        const sorteoQuery = 'INSERT INTO sorteo (id_compra, codigo, signo) VALUES (?, ?, ?)';
+        const sorteoValues = [idCompra, code, signo];
+        await conn.query(sorteoQuery, sorteoValues);
+      }
 
       // Confirmación de éxito
       return NextResponse.json({ message: 'Compra realizada con éxito y cartones actualizados' }, { status: 200 });

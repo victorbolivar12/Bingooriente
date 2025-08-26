@@ -8,20 +8,33 @@ import Loading from "../components/Loading";
 export default function CartonesSelector() {
   const [selectedCarton, setSelectedCarton] = useState<number | null>(null);
   const [selectedCartones, setSelectedCartones] = useState<number[]>([]);
+  const [precioSorteo, setPrecioSorteo] = useState<number | null>(null);
   const [cartones, setCartones] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fecha, setFecha] = useState(null);
+  const [fechaFormateada, setFechaFormateada] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [precioCarton, setPrecioCarton] = useState<number | null>(null); // Precio desde la API
-
   const router = useRouter();
 
-  const fecha = new Date();
-  const fechaActual = fecha.toLocaleDateString("es-MX", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  console.log(fecha)
+
+
+  useEffect(() => {
+    if (fecha) {
+      const [dia, mes, anio] = fecha.split("/");
+      const fechaObj = new Date(anio, mes - 1, dia);
+
+      const formateada = fechaObj.toLocaleDateString("es-MX", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+
+      setFechaFormateada(formateada);
+    }
+  }, [fecha]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,8 +51,12 @@ export default function CartonesSelector() {
         const cartonesData = await cartonesRes.json();
         const configData = await configRes.json();
 
+        console.log(configData)
+
         setCartones(cartonesData.cartones);
-        setPrecioCarton(configData.precio_carton); // Asignar precio desde config
+        setPrecioCarton(configData.precio_carton);
+        setFecha(configData.Fecha);
+        setPrecioSorteo(configData.monto_sorteo);
       } catch (error) {
         console.error("Error al obtener datos:", error);
       } finally {
@@ -87,7 +104,7 @@ export default function CartonesSelector() {
     <div className="p-4 sm:px-16 bg-[#950F0F] min-h-screen">
       <h2 className="text-center text-white text-2xl font-bold">SELECCIONA TUS CARTONES</h2>
       <p className="text-center text-white">Puedes seleccionar uno o varios cartones</p>
-      <p>Fecha de sorteo: {fechaActual}</p>
+      <p>Fecha de sorteo: {fechaFormateada}</p>
 
       {loading || precioCarton === null ? (
         <Loading />
@@ -118,10 +135,14 @@ export default function CartonesSelector() {
           )}
 
           {selectedCartones.length >= 3 && (
-            <div className="fixed sm:w-84 bottom-4 right-4 bg-yellow-600 border-2 border-white text-white px-4 py-2 rounded shadow-lg z-50 font-light animate-fade-up">
-              <span className="font-bold">SI CONFIRMAS TU COMPRA ESTAS PARTICIPANDO EN UN SORTEO DE 200bs</span> <br />
+            <div className="fixed w-84 sm:w-94 top-4 left-1/2 transform -translate-x-1/2 bg-yellow-600 border-2 border-white text-white px-4 py-2 rounded shadow-lg z-50 font-light animate-fade-up">
+              <span className="font-bold">
+                SI CONFIRMAS TU COMPRA ESTAS PARTICIPANDO EN UN SORTEO DE {precioSorteo}Bs
+              </span>
+              <br />
             </div>
           )}
+
 
           <Modal
             isOpen={isModalOpen}

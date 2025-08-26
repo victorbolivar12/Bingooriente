@@ -5,7 +5,11 @@ import * as Yup from "yup";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
+import BankInfo from "@/app/components/subcomponents/BankInfo";
+import InputField from "@/app/components/subcomponents/InputField";
+
 import { ChangeEvent, useState } from "react";
+
 
 type FormValues = {
     name: string;
@@ -14,6 +18,7 @@ type FormValues = {
     reference: string;
     receipt: File | null;
     code: string;
+    signo: string;
 };
 
 
@@ -35,6 +40,7 @@ export default function BingoPaymentForm() {
             formData.append("receipt", values.receipt);
             formData.append("cartones", JSON.stringify(cartones));
             formData.append("code", values.code);
+            formData.append("signo", values.signo);
 
             const response2 = await fetch("api/enviar-correo", {
                 method: "POST",
@@ -57,6 +63,7 @@ export default function BingoPaymentForm() {
                     referencia_pago: values.reference,
                     cartones,
                     code: values.code,
+                    signo: values.signo,
                 }),
             });
 
@@ -97,15 +104,15 @@ export default function BingoPaymentForm() {
         }
     };
 
-
     const formik = useFormik<FormValues>({
         initialValues: {
             name: "",
             phone: "",
             email: "",
             reference: "",
-            receipt: null as File | null,
-            code: ""
+            receipt: null,
+            code: "",
+            signo: "",
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Campo requerido"),
@@ -115,10 +122,18 @@ export default function BingoPaymentForm() {
                 .length(4, "Debe tener 4 dígitos")
                 .required("Campo requerido"),
             receipt: Yup.mixed<File>().required("Sube el comprobante"),
-            code: Yup.string()
-                .matches(/^\d{4}[\W_]$/, "Debe contener exactamente 4 números seguidos de un signo")
-                .required("Campo requerido"),
 
+            code: Yup.string().when([], {
+                is: () => cartones.length > 3,
+                then: (schema) => schema.length(4, "Debe tener 4 dígitos").required("Campo requerido"),
+                otherwise: (schema) => schema.notRequired(),
+            }),
+
+            signo: Yup.string().when([], {
+                is: () => cartones.length > 3,
+                then: (schema) => schema.required("Campo requerido"),
+                otherwise: (schema) => schema.notRequired(),
+            }),
         }),
         onSubmit: (values) => {
             handleSubmit(values);
@@ -135,98 +150,36 @@ export default function BingoPaymentForm() {
 
     return (
         <div className="w-full mx-auto p-6 md:px-20 my-5 rounded-lg text-white">
+
             {isLoading && (
                 <div className="fixed sm:w-84 bottom-4 right-4 bg-yellow-600 border-2 border-white text-white px-4 py-2 rounded shadow-lg z-50 font-light animate-fade-up">
                     <span className="font-bold">PROCESANDO PAGO!</span> <br />
                     Esto puede tardar unos minutos...
                 </div>
             )}
+
             <h2 className="text-xl sm:text-3xl font-bold text-center">REALIZA TU PAGO Y ENVIA TUS DATOS</h2>
             <p className="text-sm md:text-xl text-center">Te contactamos a través de tu número de teléfono</p>
 
-            <div className="bg-white text-black p-4 rounded mt-4">
-                <h3 className="font-bold text-[#D98019]">PAGO MOVIL:</h3>
-                <p className="p-1.5"><strong>Banco:</strong> Venezuela</p>
-                <p className="p-1.5"><strong>Teléfono:</strong> 04121173414 </p>
-                <p className="p-1.5"><strong>Cédula:</strong> 04249528298</p>
-                <p className="p-1.5"><strong>Monto a pagar:</strong>{total}bs</p>
-                {/* Línea divisoria */}
-                <div className="border-t border-black w-full mx-auto my-4"></div>
-                <p><strong>Cartones seleccionados:</strong> </p>
-                <div className="grid grid-cols-5 md:grid-cols-15 gap-5 mt-6">
-                    {cartones.map((carton, index) => (
+            <BankInfo cartones={cartones} total={total} />
 
-                        <div
-                            key={index}
-                            className={`p-1 bg-yellow-500 text-white rounded-md flex justify-center`}
-                        >
-                            {carton}
-                        </div>
-                    ))}
-                </div>
-            </div>
 
             <form onSubmit={formik.handleSubmit} className="mt-4 w-full">
                 <h2 className="text-xl text-white font-bold my-5">DATOS DE CONTACTO</h2>
-                <div className="w-full md:flex md:gap-5">
-                    <div className="w-full">
-                        <label className="block">Nombre</label>
-                        <input
-                            type="text"
-                            name="name"
-                            className="w-full p-2 border border-[#8E8989] rounded text-black bg-white"
-                            onChange={formik.handleChange}
-                            value={formik.values.name}
-                        />
-                        {formik.touched.name && formik.errors.name && (
-                            <p className="text-white text-sm">{formik.errors.name}</p>
-                        )}
-                    </div>
 
-                    <div className="w-full">
-                        <label className="block">Teléfono</label>
-                        <input
-                            type="text"
-                            name="phone"
-                            className="w-full p-2 border border-[#8E8989] rounded text-black bg-white"
-                            onChange={formik.handleChange}
-                            value={formik.values.phone}
-                        />
-                        {formik.touched.phone && formik.errors.phone && (
-                            <p className="text-white text-sm">{formik.errors.phone}</p>
-                        )}
-                    </div>
+                <div className="w-full md:flex md:gap-5">
+                    <InputField label="Nombre" name="name" type="text" formik={formik} maxLength={100}/>
+                    <InputField label="Teléfono" name="phone" type="text" formik={formik} maxLength={30}/>
                 </div>
 
-
                 <div className="mt-2">
-                    <label className="block">Correo</label>
-                    <input
-                        type="email"
-                        name="email"
-                        className="w-full p-2 border border-[#8E8989] rounded text-black bg-white"
-                        onChange={formik.handleChange}
-                        value={formik.values.email}
-                    />
-                    {formik.touched.email && formik.errors.email && (
-                        <p className="text-white text-sm">{formik.errors.email}</p>
-                    )}
+                    <InputField label="Correo" name="email" type="email" formik={formik} maxLength={200}/>
                 </div>
 
                 <h2 className="text-xl text-white font-bold my-5">DATOS DE PAGO</h2>
 
                 <div className="mt-2">
-                    <label className="block">Últimos 4 números de referencia</label>
-                    <input
-                        type="text"
-                        name="reference"
-                        className="w-full p-2 border border-[#8E8989] rounded text-black bg-white"
-                        onChange={formik.handleChange}
-                        value={formik.values.reference}
-                    />
-                    {formik.touched.reference && formik.errors.reference && (
-                        <p className="text-white text-sm">{formik.errors.reference}</p>
-                    )}
+                    <InputField label="Número de referencia (4 dígitos)" name="reference" type="text" formik={formik} maxLength={4}/>
                 </div>
 
                 <div className="mt-2">
@@ -246,20 +199,9 @@ export default function BingoPaymentForm() {
                     <>
                         <h2 className="text-xl text-white font-bold my-5">DATOS DEL SORTEO</h2>
 
-                        <div className="mt-2">
-                            <label className="block">
-                                Ingrese un número de 4 dígitos más un signo como +, #, @, *, etc. Ejemplo: 1234+
-                            </label>
-                            <input
-                                type="text"
-                                name="code"
-                                className="w-full p-2 border border-[#8E8989] rounded text-black bg-white"
-                                onChange={formik.handleChange}
-                                value={formik.values.code}
-                            />
-                            {formik.touched.code && formik.errors.code && (
-                                <p className="text-white text-sm">{formik.errors.code}</p>
-                            )}
+                        <div className="sm:flex w-full gap-5">
+                            <InputField label="Código de Sorteo (4 dígitos) Ejemplo 1497" name="code" type="text" formik={formik} maxLength={100} />
+                            <InputField label="Signo del Zodiaco" name="signo" type="text" formik={formik} maxLength={4}/>
                         </div>
                     </>
                 )}
