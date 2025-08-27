@@ -168,18 +168,18 @@ export default function BingoPaymentForm() {
                 <h2 className="text-xl text-white font-bold my-5">DATOS DE CONTACTO</h2>
 
                 <div className="w-full md:flex md:gap-5">
-                    <InputField label="Nombre" name="name" type="text" formik={formik} maxLength={100}/>
-                    <InputField label="Teléfono" name="phone" type="text" formik={formik} maxLength={30}/>
+                    <InputField label="Nombre" name="name" type="text" formik={formik} maxLength={100} />
+                    <InputField label="Teléfono" name="phone" type="text" formik={formik} maxLength={30} />
                 </div>
 
                 <div className="mt-2">
-                    <InputField label="Correo" name="email" type="email" formik={formik} maxLength={200}/>
+                    <InputField label="Correo" name="email" type="email" formik={formik} maxLength={200} />
                 </div>
 
                 <h2 className="text-xl text-white font-bold my-5">DATOS DE PAGO</h2>
 
                 <div className="mt-2">
-                    <InputField label="Número de referencia (4 dígitos)" name="reference" type="text" formik={formik} maxLength={4}/>
+                    <InputField label="Número de referencia (4 dígitos)" name="reference" type="text" formik={formik} maxLength={4} />
                 </div>
 
                 <div className="mt-2">
@@ -201,7 +201,34 @@ export default function BingoPaymentForm() {
 
                         <div className="sm:flex w-full gap-5">
                             <InputField label="Código de Sorteo (4 dígitos) Ejemplo 1497" name="code" type="text" formik={formik} maxLength={4} />
-                            <InputField label="Signo del Zodiaco" name="signo" type="text" formik={formik} maxLength={100}/>
+                            <div className="mt-2">
+                                <label htmlFor="signo" className="block">Selecciona tu signo zodiacal</label>
+                                <select
+                                    id="signo"
+                                    name="signo"
+                                    className="w-full p-2 border border-[#8E8989] rounded text-black bg-white"
+                                    value={formik.values.signo}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                >
+                                    <option value="">-- Selecciona un signo --</option>
+                                    <option value="Aries">Aries</option>
+                                    <option value="Tauro">Tauro</option>
+                                    <option value="Géminis">Géminis</option>
+                                    <option value="Cáncer">Cáncer</option>
+                                    <option value="Leo">Leo</option>
+                                    <option value="Virgo">Virgo</option>
+                                    <option value="Libra">Libra</option>
+                                    <option value="Escorpio">Escorpio</option>
+                                    <option value="Sagitario">Sagitario</option>
+                                    <option value="Capricornio">Capricornio</option>
+                                    <option value="Acuario">Acuario</option>
+                                    <option value="Piscis">Piscis</option>
+                                </select>
+                                {formik.touched.signo && formik.errors.signo && (
+                                    <p className="text-white text-sm">{formik.errors.signo}</p>
+                                )}
+                            </div>
                         </div>
                     </>
                 )}

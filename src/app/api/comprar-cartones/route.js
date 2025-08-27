@@ -13,8 +13,10 @@ export async function POST(req) {
       const idCliente = clienteResult.insertId;
 
       // Paso 2: Insertar pago
+      const result = await conn.query('SELECT precio_carton FROM configuracion LIMIT 1');
+      const precioPorCarton = result[0]?.precio_carton;
       const pagoQuery = 'INSERT INTO pagos (id_cliente, monto, referencia_pago, imagen_comprobante) VALUES (?, ?, ?, ?)';
-      const total = cartones.length * parseInt(process.env.NEXT_PUBLIC_PRECIO_POR_CARTON)
+      const total = cartones.length * precioPorCarton
       const pagoValues = [idCliente, total, referencia_pago, imagen_comprobante];
       const pagoResult = await conn.query(pagoQuery, pagoValues);
       const idPago = pagoResult.insertId;
