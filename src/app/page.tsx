@@ -3,7 +3,6 @@ import Main from "./components/Main"
 import Footer from "./components/Footer"
 import HowToPlay from "./components/HowToPlay"
 import News from "./components/News"
-import Button from "./Seleccionar-Carton/Components/Button"
 
 export default function Home() {
   return (

@@ -200,8 +200,8 @@ export default function BingoPaymentForm() {
                         <h2 className="text-xl text-white font-bold my-5">DATOS DEL SORTEO</h2>
 
                         <div className="sm:flex w-full gap-5">
-                            <InputField label="Código de Sorteo (4 dígitos) Ejemplo 1497" name="code" type="text" formik={formik} maxLength={100} />
-                            <InputField label="Signo del Zodiaco" name="signo" type="text" formik={formik} maxLength={4}/>
+                            <InputField label="Código de Sorteo (4 dígitos) Ejemplo 1497" name="code" type="text" formik={formik} maxLength={4} />
+                            <InputField label="Signo del Zodiaco" name="signo" type="text" formik={formik} maxLength={100}/>
                         </div>
                     </>
                 )}

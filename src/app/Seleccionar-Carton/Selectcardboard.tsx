@@ -37,35 +37,38 @@ export default function CartonesSelector() {
   }, [fecha]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const iniciarSorteo = async () => {
       try {
+    
         const [cartonesRes, configRes] = await Promise.all([
           fetch("/api/cartones"),
           fetch("/api/configuracion"),
         ]);
 
-        if (!cartonesRes.ok || !configRes.ok) {
-          throw new Error("Error al obtener datos.");
-        }
+        if (!cartonesRes.ok) throw new Error("Error al obtener cartones");
+        if (!configRes.ok) throw new Error("Error al obtener configuración");
 
-        const cartonesData = await cartonesRes.json();
-        const configData = await configRes.json();
+        const [cartonesData, configData] = await Promise.all([
+          cartonesRes.json(),
+          configRes.json(),
+        ]);
 
-        console.log(configData)
-
+        // 3. Guardar datos en el estado
         setCartones(cartonesData.cartones);
         setPrecioCarton(configData.precio_carton);
         setFecha(configData.Fecha);
         setPrecioSorteo(configData.monto_sorteo);
+
       } catch (error) {
-        console.error("Error al obtener datos:", error);
+        console.error("Error en la inicialización del sorteo:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    iniciarSorteo();
   }, []);
+
 
   const handleGoToPay = () => {
     const total = selectedCartones.length * (precioCarton ?? 0);
