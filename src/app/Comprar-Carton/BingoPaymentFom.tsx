@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 import BankInfo from "@/app/components/subcomponents/BankInfo";
 import InputField from "@/app/components/subcomponents/InputField";
 
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 
 type FormValues = {
