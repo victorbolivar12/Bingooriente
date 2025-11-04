@@ -50,7 +50,7 @@ const Main = () => {
         <div className="text-center md:text-left flex-1">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">
             {/* {titulo} <br /> */}
-            GRAN SORTEO DE LA POLICIA NACINAL DE COLOMBIA
+            GRAN SORTEO DE LA POLICIA NACIONAL DE COLOMBIA
           </h1>
           <p className="text-lg md:text-xl mb-6">
             {/* {descripcion} */}
