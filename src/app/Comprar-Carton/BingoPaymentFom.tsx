@@ -140,11 +140,11 @@ export default function BingoPaymentForm() {
     });
 
 
-    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget.files && event.currentTarget.files[0]) {
-            formik.setFieldValue("receipt", event.currentTarget.files[0]);
-        }
-    };
+    // const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //     if (event.currentTarget.files && event.currentTarget.files[0]) {
+    //         formik.setFieldValue("receipt", event.currentTarget.files[0]);
+    //     }
+    // };
 
 
     return (

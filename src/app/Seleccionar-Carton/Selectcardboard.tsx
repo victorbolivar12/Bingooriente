@@ -8,53 +8,30 @@ import Loading from "../components/Loading";
 export default function CartonesSelector() {
   const [selectedCarton, setSelectedCarton] = useState<number | null>(null);
   const [selectedCartones, setSelectedCartones] = useState<number[]>([]);
-  const [precioSorteo, setPrecioSorteo] = useState<number | null>(null);
   const [cartones, setCartones] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [fecha, setFecha] = useState(null);
-  const [fechaFormateada, setFechaFormateada] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [precioCarton, setPrecioCarton] = useState<number | null>(null); // Precio desde la API
+  
   const router = useRouter();
-
-  useEffect(() => {
-    if (fecha) {
-      const [dia, mes, anio] = fecha.split("/");
-      const fechaObj = new Date(anio, mes - 1, dia);
-
-      const formateada = fechaObj.toLocaleDateString("es-MX", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-
-      setFechaFormateada(formateada);
-    }
-  }, [fecha]);
 
   useEffect(() => {
     const iniciarSorteo = async () => {
       try {
     
-        const [cartonesRes, configRes] = await Promise.all([
+        const [cartonesRes] = await Promise.all([
           fetch("/api/cartones"),
-          fetch("/api/configuracion"),
         ]);
 
         if (!cartonesRes.ok) throw new Error("Error al obtener cartones");
-        if (!configRes.ok) throw new Error("Error al obtener configuración");
+  
 
-        const [cartonesData, configData] = await Promise.all([
+        const [cartonesData] = await Promise.all([
           cartonesRes.json(),
-          configRes.json(),
         ]);
 
         // 3. Guardar datos en el estado
         setCartones(cartonesData.cartones);
-        setPrecioCarton(configData.precio_carton);
-        setFecha(configData.Fecha);
-        setPrecioSorteo(configData.monto_sorteo);
+
 
       } catch (error) {
         console.error("Error en la inicialización del sorteo:", error);
@@ -68,7 +45,7 @@ export default function CartonesSelector() {
 
 
   const handleGoToPay = () => {
-    const total = selectedCartones.length * (precioCarton ?? 0);
+    const total = 0
     router.push(
       `/Comprar-Carton?cartones=${JSON.stringify(selectedCartones)}&total=${total}`
     );
@@ -98,15 +75,13 @@ export default function CartonesSelector() {
   };
 
 
-  const total = selectedCartones.length * (precioCarton ?? 0);
-
   return (
     <div className="p-4 sm:px-16 bg-[#14821f] min-h-screen">
       <h2 className="text-center text-white text-2xl font-bold">SELECCIONA TUS CARTONES</h2>
       <p className="text-center text-white">Puedes seleccionar uno o varios cartones</p>
       {/* <p>Fecha de sorteo: {fechaFormateada}</p> */}
 
-      {loading || precioCarton === null ? (
+      {loading ? (
         <Loading />
       ) : (
         <>
