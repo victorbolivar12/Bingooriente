@@ -6,13 +6,23 @@ const HowToPlay = () => {
 
 
   return (
-    <section className="bg-[#D98019] text-white py-5 px-6 relative z-0">
+    <section className="bg-[#14821f] text-white py-5 px-6 relative z-0">
       <div className="max-w-4xl mx-auto text-center">
+
+        {/* Imagen de cartones (solo en pantallas grandes) */}
+        <div className="hidden md:block absolute top-0 right-0">
+          <Image src="/decorate1.png" width={250} height={250} alt="Bingo" />
+        </div>
+
+        {/* Imagen de cartones (solo en pantallas grandes) */}
+        <div className="hidden md:block absolute top-0 left-0">
+          <Image src="/decorate2.png" width={250} height={250} alt="Bolas de bingo" />
+        </div>
 
         {/* Título */}
         <h2 className="text-3xl md:text-4xl font-bold mb-10">¿CÓMO SE JUEGA?</h2>
 
-        <div className="flex justify-center w-full gap-10">
+        {/* <div className="flex justify-center w-full gap-10">
           <video
             controls
             preload="none"
@@ -45,7 +55,7 @@ const HowToPlay = () => {
             />
             Su navegador no soporta la etiqueta de vídeo.
           </video>
-        </div>
+        </div> */}
 
 
 
@@ -113,7 +123,7 @@ const HowToPlay = () => {
         </p>
       </div>
 
-      
+
     </section>
   );
 };

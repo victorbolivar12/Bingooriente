@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const query = 'SELECT * FROM cartones WHERE status = "disponible" AND activo = 1';
+    const query = 'SELECT * FROM cartones WHERE status = "disponible" LIMIT 600';
     const cartones = await conn.query(query);
 
     if (cartones.length === 0) {

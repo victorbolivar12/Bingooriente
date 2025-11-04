@@ -2,8 +2,8 @@
 @import "tailwindcss-animated";
 
 :root {
-  --background: #950F0F;
-  --foreground: #D98019;
+  --background: #2d9348;
+  --foreground: #14821f;
 }
 
 html {
@@ -19,7 +19,7 @@ html {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #950F0F;
+    --background: #2d9348;
     --foreground: #ffffff;
   }
 }

@@ -45,7 +45,7 @@ const SearchCartons = () => {
   const handleDownload = (cartonId) => {
     const link = document.createElement("a");
     const imagePath = cartonId
-    ? `/CARTONES_JPG_1200/SERIAL_1200_CARTON_${String(cartonId).padStart(5, "0")}.jpg`
+    ? `/CARTONES_JPG_600/SERIAL_600_CARTON_${String(cartonId).padStart(5, "0")}.jpg`
     : "/placeholder.jpg"; // Imagen por defecto si cartonId es null
     link.href = imagePath; 
     link.download = `carton ${cartonId}.jpg`; // Cambia el nombre si es necesario
@@ -55,7 +55,7 @@ const SearchCartons = () => {
   };
 
   return (
-    <div className="bg-[#950F0F] min-h-screen p-8">
+    <div className="bg-[#2d9348] min-h-screen p-8">
       <h1 className="text-white text-center text-3xl font-bold mb-2">DESCARGA TU CARTÓN</h1>
       <p className="text-white text-center mb-6">Busca tu cartón ingresando el teléfono</p>
 
@@ -69,7 +69,7 @@ const SearchCartons = () => {
         />
         <button
           onClick={handleSearch}
-          className="bg-[#D98019] text-white p-2 rounded-md"
+          className="bg-green text-white border border-white p-2 rounded-md cursor-pointer"
         >
           Buscar
         </button>
@@ -83,7 +83,7 @@ const SearchCartons = () => {
         <div className="overflow-x-auto">
           <table className="table-auto w-full bg-white rounded-lg shadow-lg">
             <thead>
-              <tr className="bg-[#D98019] text-white">
+              <tr className="bg-[#104015] text-white">
                 <th className="p-4 text-left">Número de Cartón</th>
                 <th className="p-4 text-left">Estado</th>
                 <th className="p-4 text-left">Descargar Carton</th>
@@ -100,7 +100,7 @@ const SearchCartons = () => {
                       {item && (
                         <button
                           onClick={() => handleDownload(item.carton_numero)}
-                          className="bg-[#950F0F] text-white p-2 rounded-md cursor-pointer"
+                          className="bg-[#14821f] text-white p-2 rounded-md cursor-pointer"
                         >
                           Descargar Cartón
                         </button>

@@ -10,8 +10,9 @@ const Navbar = () => {
     return (
         <nav className="p-5 flex justify-between items-center shadow-lg lg:px-12">
             {/* Logo */}
-            <Link href="/">
-                <Image src="/LOGO.png" alt="Logo Bingoriente" width={250} height={250} className="w-40 lg:w-60 cursor-pointer" />
+            <Link href="/" className="flex justify-center items-center gap-2">
+                <Image src="/logoPolicia.png" alt="Logo Bingoriente" width={250} height={250} className="w-15 lg:w-15 cursor-pointer" />
+                <p className="font-bold text-xs sm:text-xl"> POLICIA NACIONAL DE COLOMBIA <br/> 134 AÑOS DE SERVICIO </p>
             </Link>
 
             {/* Botón hamburguesa en móvil */}
@@ -28,11 +29,11 @@ const Navbar = () => {
             </button>
 
             {/* Menú de navegación */}
-            <ul className={`md:flex md:gap-6 absolute bg-[#950F0F] z-40 md:static top-16 left-0 w-full md:w-auto md:bg-transparent shadow-md md:shadow-none p-5 md:p-0 transition-all ${isOpen ? "block animate-fade-down" : "animate-fade-up hidden"}`}>
-                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Seleccionar-Carton">Comprar</Link></li>
-                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Buscar-Carton">Cartones</Link></li>
-                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Testimonios">Testimonios</Link></li>
-                <li className="p-2.5 hover:bg-white hover:text-[#950F0F] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Contacto">Contacto</Link></li>
+            <ul className={`md:flex md:gap-6 absolute bg-[#2d9348] z-40 md:static top-16 left-0 w-full md:w-auto md:bg-transparent shadow-md md:shadow-none p-5 md:p-0 transition-all ${isOpen ? "block animate-fade-down" : "animate-fade-up hidden"}`}>
+                <li className="p-2.5 hover:bg-white hover:text-[#2d9348] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Seleccionar-Carton">Comprar</Link></li>
+                <li className="p-2.5 hover:bg-white hover:text-[#2d9348] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Buscar-Carton">Cartones</Link></li>
+                <li className="p-2.5 hover:bg-white hover:text-[#2d9348] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Testimonios">Testimonios</Link></li>
+                <li className="p-2.5 hover:bg-white hover:text-[#2d9348] rounded-xs hover:font-semibold cursor-pointer lg:hover:font-normal transition"><Link href="/Contacto">Contacto</Link></li>
             </ul>
         </nav>
     );

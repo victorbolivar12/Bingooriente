@@ -17,9 +17,6 @@ export default function CartonesSelector() {
   const [precioCarton, setPrecioCarton] = useState<number | null>(null); // Precio desde la API
   const router = useRouter();
 
-  console.log(fecha)
-
-
   useEffect(() => {
     if (fecha) {
       const [dia, mes, anio] = fecha.split("/");
@@ -104,10 +101,10 @@ export default function CartonesSelector() {
   const total = selectedCartones.length * (precioCarton ?? 0);
 
   return (
-    <div className="p-4 sm:px-16 bg-[#950F0F] min-h-screen">
+    <div className="p-4 sm:px-16 bg-[#14821f] min-h-screen">
       <h2 className="text-center text-white text-2xl font-bold">SELECCIONA TUS CARTONES</h2>
       <p className="text-center text-white">Puedes seleccionar uno o varios cartones</p>
-      <p>Fecha de sorteo: {fechaFormateada}</p>
+      {/* <p>Fecha de sorteo: {fechaFormateada}</p> */}
 
       {loading || precioCarton === null ? (
         <Loading />
@@ -117,7 +114,7 @@ export default function CartonesSelector() {
             {cartones.map((carton) => (
               <button
                 key={carton.id_carton}
-                className={`w-16 h-16 bg-[#D98019] cursor-pointer text-white border border-white rounded-md font-bold ${selectedCartones.includes(carton.id_carton) ? "bg-green-500" : ""
+                className={`w-16 h-16 bg-[#2d9348] cursor-pointer text-white border border-white rounded-md font-bold ${selectedCartones.includes(carton.id_carton) ? "bg-green-500" : ""
                   }`}
                 onClick={() => handleOpenModal(carton.id_carton)}
               >
@@ -126,25 +123,33 @@ export default function CartonesSelector() {
             ))}
           </div>
 
-          {selectedCartones.length > 0 && (
+          {selectedCartones.length > 0 && selectedCartones.length < 3 && (
             <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-[90%] max-w-md">
               <Button
-                className="w-full text-2xl font-semibold text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl bg-gradient-to-r from-yellow-400 to-red-600 hover:from-yellow-500 hover:to-red-700 focus:outline-none border-2 border-white cursor-pointer"
+                className="w-full text-2xl font-semibold text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 focus:outline-none border-2 border-white cursor-pointer"
                 onClick={handleGoToPay}
               >
-                IR A PAGAR {selectedCartones.length} CARTONES ({total} Bs)
+                SELECCIONAR {selectedCartones.length} CARTONES
               </Button>
             </div>
           )}
 
-          {selectedCartones.length >= 3 && (
+          {/* {selectedCartones.length >= 3 && (
             <div className="fixed w-84 sm:w-94 top-4 left-1/2 transform -translate-x-1/2 bg-yellow-600 border-2 border-white text-white px-4 py-2 rounded shadow-lg z-50 font-light animate-fade-up">
               <span className="font-bold">
                 SI CONFIRMAS TU COMPRA ESTAS PARTICIPANDO EN UN SORTEO DE {precioSorteo}Bs
               </span>
               <br />
             </div>
-          )}
+          )} */}
+
+           {selectedCartones.length > 2 && (
+                <div className="fixed sm:w-84 bottom-4 right-4 bg-green-600 border-2 border-white text-white px-4 py-2 rounded shadow-lg z-50 font-light animate-fade-up">
+                    <span className="font-bold">Solo puedes seleccionar 2 cartones</span> <br />
+                    debes quitar uno para continuar
+                </div>
+            )}
+
 
 
           <Modal

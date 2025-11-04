@@ -21,7 +21,7 @@ export default function Modal({ isOpen, onClose, onSelect, cartonId }: ModalProp
   if (!isOpen) return null;
 
   const imagePath = cartonId
-    ? `/CARTONES_JPG_1200/SERIAL_1200_CARTON_${String(cartonId).padStart(5, "0")}.jpg`
+    ? `/CARTONES_JPG_600/SERIAL_600_CARTON_${String(cartonId).padStart(5, "0")}.jpg`
     : "/placeholder.jpg"; // Imagen por defecto si cartonId es null
 
   return (

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const News = () => {
     return (
-        <section className="flex flex-col justify-center items-center md:my-0 bg-[#D98019] relative">
+        <section className="flex flex-col justify-center items-center md:my-0 bg-[#14821f] relative">
             <h1 className='text-3xl md:text-4xl font-bold mb-4 mt-5'>LO MAS NUEVO</h1>
 
             <div className="relative w-full md:w-[60%] h-64">

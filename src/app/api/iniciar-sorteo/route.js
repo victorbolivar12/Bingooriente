@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST() {
   try {
-    // Obtenemos configuración
+    // Obtener número de cartones desde configuración
     const [config] = await conn.query(
       'SELECT numero_cartones FROM configuracion LIMIT 1'
     );
@@ -18,23 +18,29 @@ export async function POST() {
     const { numero_cartones } = config;
 
     // ----------------------------------------------------
-    // 🔹 1. Borrar datos de las tablas relacionadas
+    // 1️⃣ Borrar datos de las tablas relacionadas
+    // El orden importa por las FK
     // ----------------------------------------------------
-    // El orden importa por las FK: sorteo -> compras -> pagos/clientes
     await conn.query('DELETE FROM sorteo');
     await conn.query('DELETE FROM compras');
     await conn.query('DELETE FROM pagos');
     await conn.query('DELETE FROM clientes');
 
     // ----------------------------------------------------
-    // 🔹 2. Resetear cartones (status = disponible, activo = 0)
+    // 2️⃣ Resetear AUTO_INCREMENT
     // ----------------------------------------------------
-    await conn.query(
-      'UPDATE cartones SET status = "disponible", activo = 0'
-    );
+    await conn.query('ALTER TABLE clientes AUTO_INCREMENT = 1');
+    await conn.query('ALTER TABLE pagos AUTO_INCREMENT = 1');
+    await conn.query('ALTER TABLE compras AUTO_INCREMENT = 1');
+    await conn.query('ALTER TABLE sorteo AUTO_INCREMENT = 1');
 
     // ----------------------------------------------------
-    // 🔹 3. Activar los primeros N cartones
+    // 3️⃣ Resetear cartones (status = disponible, activo = 0)
+    // ----------------------------------------------------
+    await conn.query('UPDATE cartones SET status = "disponible", activo = 0');
+
+    // ----------------------------------------------------
+    // 4️⃣ Activar los primeros N cartones según configuración
     // ----------------------------------------------------
     await conn.query(
       'UPDATE cartones SET activo = 1 WHERE status = "disponible" LIMIT ?',
@@ -42,10 +48,12 @@ export async function POST() {
     );
 
     // ----------------------------------------------------
-    // 🔹 4. Respuesta
+    // 5️⃣ Respuesta
     // ----------------------------------------------------
     return NextResponse.json(
-      { message: `Sorteo iniciado con ${numero_cartones} cartones activos. Datos previos eliminados.` },
+      {
+        message: `Sorteo iniciado con ${numero_cartones} cartones activos. Datos antiguos eliminados y AUTO_INCREMENT reseteados.`,
+      },
       { status: 200 }
     );
   } catch (error) {
