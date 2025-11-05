@@ -28,12 +28,6 @@ const PrizeList = () => {
           <li className="bg-white/10 p-3 rounded-2xl">🔥 Horno microondas</li>
           <li className="bg-white/10 p-3 rounded-2xl">📝 Noterinternacional Affa</li>
         </ul>
-
-        {/* Nota final */}
-        <p className="text-sm mt-8 italic">
-          Los premios serán entregados a los ganadores confirmados el mismo día del sorteo o en las
-          24 horas siguientes. ¡Suerte a todos los participantes!
-        </p>
       </div>
     </section>
   );
