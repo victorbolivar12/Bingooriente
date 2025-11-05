@@ -80,7 +80,7 @@ const HowToPlay = () => {
             <Image src="/payment.png" width={50} height={50} alt="Pago" />
             <div>
               <h3 className="font-bold text-xl">Paso 2:</h3>
-              <p>Paga el cartón a través de un pago móvil</p>
+              <p>Verifica los cartones seleccionados</p>
             </div>
           </div>
 
@@ -114,13 +114,6 @@ const HowToPlay = () => {
             </div>
           </div>
         </div>
-
-        {/* Nota final */}
-        <p className="text-sm mt-8 italic">
-          Todos los pagos se realizan el mismo día o a más tardar la mañana siguiente a través de un
-          pago móvil. Nos comunicamos con usted a través del número de teléfono que dejó al realizar su
-          compra.
-        </p>
       </div>
 
 

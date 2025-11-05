@@ -61,7 +61,7 @@ const Main = () => {
           {/* Botón principal */}
           <Link href="/Seleccionar-Carton">
             <button className="bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 border border-white text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg transition cursor-pointer w-full">
-              COMPRAR CARTÓN
+              SELECCIONAR 2 CARTONES
             </button>
           </Link>
         </div>
