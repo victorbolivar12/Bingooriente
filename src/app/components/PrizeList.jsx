@@ -26,7 +26,6 @@ const PrizeList = () => {
           <li className="bg-white/10 p-3 rounded-2xl">🍰 Batidora</li>
           <li className="bg-white/10 p-3 rounded-2xl">🥪 Sandwichera</li>
           <li className="bg-white/10 p-3 rounded-2xl">🔥 Horno microondas</li>
-          <li className="bg-white/10 p-3 rounded-2xl">📝 Noterinternacional Affa</li>
         </ul>
       </div>
     </section>

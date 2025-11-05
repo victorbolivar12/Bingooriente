@@ -78,7 +78,7 @@ export default function CartonesSelector() {
   return (
     <div className="p-4 sm:px-16 bg-[#14821f] min-h-screen">
       <h2 className="text-center text-white text-2xl font-bold">SELECCIONA TUS CARTONES</h2>
-      <p className="text-center text-white">Puedes seleccionar uno o varios cartones</p>
+      <p className="text-center text-white">Debes seleccionar 2 cartones</p>
       {/* <p>Fecha de sorteo: {fechaFormateada}</p> */}
 
       {loading ? (
@@ -98,7 +98,7 @@ export default function CartonesSelector() {
             ))}
           </div>
 
-          {selectedCartones.length > 0 && selectedCartones.length < 3 && (
+          {selectedCartones.length == 2 && (
             <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-[90%] max-w-md">
               <Button
                 className="w-full text-2xl font-semibold text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 focus:outline-none border-2 border-white cursor-pointer"
