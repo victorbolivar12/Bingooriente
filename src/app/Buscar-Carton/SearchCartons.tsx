@@ -45,7 +45,7 @@ const SearchCartons = () => {
   const handleDownload = (cartonId) => {
     const link = document.createElement("a");
     const imagePath = cartonId
-    ? `/CARTONES_JPG_600/SERIAL_600_CARTON_${String(cartonId).padStart(5, "0")}.jpg`
+    ? `/CARTONES_JPG_636/SERIAL_636_CARTON_${String(cartonId).padStart(5, "0")}.jpg`
     : "/placeholder.jpg"; // Imagen por defecto si cartonId es null
     link.href = imagePath; 
     link.download = `carton ${cartonId}.jpg`; // Cambia el nombre si es necesario

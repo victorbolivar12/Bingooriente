@@ -79,7 +79,7 @@ export default function CartonesSelector() {
     <div className="p-4 sm:px-16 bg-[#14821f] min-h-screen">
       <h2 className="text-center text-white text-2xl font-bold">SELECCIONA TUS CARTONES</h2>
       <p className="text-center text-white">Debes seleccionar 2 cartones</p>
-      {/* <p>Fecha de sorteo: {fechaFormateada}</p> */}
+      <p>Fecha de sorteo: 12 de novienbre 2025</p>
 
       {loading ? (
         <Loading />
