@@ -3,9 +3,9 @@ import React from "react";
 
 const WelcomeBingo = () => {
   return (
-    <div className="bg-[#14821f] min-h-screen flex flex-col justify-center items-center p-6 sm:p-8 text-center">
+    <div className="bg-[#950F0F] min-h-screen flex flex-col justify-center items-center p-6 sm:p-8 text-center">
       {/* Mensaje principal */}
-      <h1 className="text-[#eaeaea] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6">
+      <h1 className="text-[#D98019] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6">
         Bienvenido a Bingoriente
       </h1>
       

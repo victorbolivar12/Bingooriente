@@ -44,7 +44,7 @@ const SearchClientByCarton = () => {
   };
 
   return (
-    <div className="bg-[#14821f] min-h-screen p-8">
+    <div className="bg-[#950F0F] min-h-screen p-8">
       <h1 className="text-white text-center text-3xl font-bold mb-2">Buscar Cliente por Número de Cartón</h1>
       <p className="text-white text-center mb-6">Ingresa el número de cartón para obtener la información del cliente</p>
 
@@ -59,7 +59,7 @@ const SearchClientByCarton = () => {
         />
         <button
           onClick={handleSearch}
-          className="p-2 bg-green border border-white text-white rounded w-full md:w-1/4"
+          className="p-2 bg-[#D98019] text-white rounded w-full md:w-1/4"
         >
           Buscar
         </button>
@@ -76,7 +76,7 @@ const SearchClientByCarton = () => {
         <div className="overflow-x-auto">
           <table className="table-auto w-full bg-white rounded-lg shadow-lg">
             <thead>
-              <tr className="bg-[#104015] text-white">
+              <tr className="bg-[#D98019] text-white">
                 <th className="p-4 text-left">Nombre</th>
                 <th className="p-4 text-left">Teléfono</th>
                 <th className="p-4 text-left">Correo</th>

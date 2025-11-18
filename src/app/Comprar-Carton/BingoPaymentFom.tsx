@@ -8,17 +8,17 @@ import Swal from 'sweetalert2'
 import BankInfo from "@/app/components/subcomponents/BankInfo";
 import InputField from "@/app/components/subcomponents/InputField";
 
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 
 type FormValues = {
     name: string;
     phone: string;
     email: string;
-    // reference: string;
-    // receipt: File | null;
-    // code: string;
-    // signo: string;
+    reference: string;
+    receipt: File | null;
+    code: string;
+    signo: string;
 };
 
 
@@ -36,11 +36,11 @@ export default function BingoPaymentForm() {
             formData.append("nombre", values.name);
             formData.append("telefono", values.phone);
             formData.append("correo", values.email);
-            //formData.append("referencia_pago", values.reference);
-            //formData.append("receipt", values.receipt);
+            formData.append("referencia_pago", values.reference);
+            formData.append("receipt", values.receipt);
             formData.append("cartones", JSON.stringify(cartones));
-            //formData.append("code", values.code);
-            //formData.append("signo", values.signo);
+            formData.append("code", values.code);
+            formData.append("signo", values.signo);
 
             const response2 = await fetch("api/enviar-correo", {
                 method: "POST",
@@ -60,10 +60,10 @@ export default function BingoPaymentForm() {
                     nombre: values.name,
                     telefono: values.phone,
                     correo: values.email,
-                    //referencia_pago: values.reference,
+                    referencia_pago: values.reference,
                     cartones,
-                    // code: values.code,
-                    // signo: values.signo,
+                    code: values.code,
+                    signo: values.signo,
                 }),
             });
 
@@ -109,30 +109,31 @@ export default function BingoPaymentForm() {
             name: "",
             phone: "",
             email: "",
-            // reference: "",
-            // receipt: null,
-            // code: "",
-            // signo: "",
+            reference: "",
+            receipt: null,
+            code: "",
+            signo: "",
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Campo requerido"),
             phone: Yup.string().required("Campo requerido"),
             email: Yup.string().email("Correo inválido").required("Campo requerido"),
-            // reference: Yup.string()
-            //     .length(4, "Debe tener 4 dígitos")
-            //     .required("Campo requerido"),
-            // receipt: Yup.mixed<File>().required("Sube el comprobante"),
-            // code: Yup.string().when([], {
-            //     is: () => cartones.length > 3,
-            //     then: (schema) => schema.length(4, "Debe tener 4 dígitos").required("Campo requerido"),
-            //     otherwise: (schema) => schema.notRequired(),
-            // }),
+            reference: Yup.string()
+                .length(4, "Debe tener 4 dígitos")
+                .required("Campo requerido"),
+            receipt: Yup.mixed<File>().required("Sube el comprobante"),
 
-            // signo: Yup.string().when([], {
-            //     is: () => cartones.length > 3,
-            //     then: (schema) => schema.required("Campo requerido"),
-            //     otherwise: (schema) => schema.notRequired(),
-            // }),
+            code: Yup.string().when([], {
+                is: () => cartones.length > 3,
+                then: (schema) => schema.length(4, "Debe tener 4 dígitos").required("Campo requerido"),
+                otherwise: (schema) => schema.notRequired(),
+            }),
+
+            signo: Yup.string().when([], {
+                is: () => cartones.length > 3,
+                then: (schema) => schema.required("Campo requerido"),
+                otherwise: (schema) => schema.notRequired(),
+            }),
         }),
         onSubmit: (values) => {
             handleSubmit(values);
@@ -140,18 +141,18 @@ export default function BingoPaymentForm() {
     });
 
 
-    // const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    //     if (event.currentTarget.files && event.currentTarget.files[0]) {
-    //         formik.setFieldValue("receipt", event.currentTarget.files[0]);
-    //     }
-    // };
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.currentTarget.files && event.currentTarget.files[0]) {
+            formik.setFieldValue("receipt", event.currentTarget.files[0]);
+        }
+    };
 
 
     return (
         <div className="w-full mx-auto p-6 md:px-20 my-5 rounded-lg text-white">
 
             {isLoading && (
-                <div className="fixed sm:w-84 bottom-4 right-4 bg-green-600 border-2 border-white text-white px-4 py-2 rounded shadow-lg z-50 font-light animate-fade-up">
+                <div className="fixed sm:w-84 bottom-4 right-4 bg-yellow-600 border-2 border-white text-white px-4 py-2 rounded shadow-lg z-50 font-light animate-fade-up">
                     <span className="font-bold">PROCESANDO PAGO!</span> <br />
                     Esto puede tardar unos minutos...
                 </div>
@@ -168,14 +169,14 @@ export default function BingoPaymentForm() {
 
                 <div className="w-full md:flex md:gap-5">
                     <InputField label="Nombre" name="name" type="text" formik={formik} maxLength={100} />
-                    <InputField label="Teléfono (Ej:04121234567)" name="phone" type="text" formik={formik} maxLength={30} />
+                    <InputField label="Teléfono" name="phone" type="text" formik={formik} maxLength={30} />
                 </div>
 
                 <div className="mt-2">
                     <InputField label="Correo" name="email" type="email" formik={formik} maxLength={200} />
                 </div>
 
-                {/* <h2 className="text-xl text-white font-bold my-5">DATOS DE PAGO</h2>
+                <h2 className="text-xl text-white font-bold my-5">DATOS DE PAGO</h2>
 
                 <div className="mt-2">
                     <InputField label="Número de referencia (4 dígitos)" name="reference" type="text" formik={formik} maxLength={4} />
@@ -192,9 +193,9 @@ export default function BingoPaymentForm() {
                     {formik.touched.receipt && formik.errors.reference && (
                         <p className="text-white text-sm">{formik.errors.reference}</p>
                     )}
-                </div> */}
+                </div>
 
-                {/* {cartones.length >= 3 && (
+                {cartones.length >= 3 && (
                     <>
                         <h2 className="text-xl text-white font-bold my-5">DATOS DEL SORTEO</h2>
 
@@ -230,11 +231,11 @@ export default function BingoPaymentForm() {
                             </div>
                         </div>
                     </>
-                )} */}
+                )}
 
                 <button
                     type="submit"
-                    className="mt-10 w-full bg-green-500 text-white py-2 rounded font-bold hover:bg-green-600 cursor-pointer transition"
+                    className="mt-10 w-full bg-yellow-500 text-white py-2 rounded font-bold hover:bg-yellow-600 cursor-pointer transition"
                 >
                     Enviar
                 </button>

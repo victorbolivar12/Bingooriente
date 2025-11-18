@@ -12,8 +12,6 @@ export async function POST(req) {
       return NextResponse.json({ message: "El número de cartón es requerido" }, { status: 400 });
     }
 
-    console.log("Número de cartón recibido:", numeroCarton);
-
     // Consulta SQL para obtener la información del cliente
     const query = `
       SELECT c.id_cliente, c.nombre, c.telefono, c.correo

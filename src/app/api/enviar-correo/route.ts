@@ -66,12 +66,12 @@ export async function POST(req: Request) {
                     <p><strong>Nombre:</strong> ${nombre}</p>
                     <p><strong>Teléfono:</strong> ${telefono}</p>
                     <p><strong>Correo:</strong> ${correo}</p>
-                    // <p><strong>Monto:</strong> $${monto}</p>
+                    <p><strong>Monto:</strong> $${monto}</p>
                     <p><strong>Referencia de pago:</strong> ${referencia_pago}</p>
                     <p><strong>Cartones comprados:</strong> ${cartones.join(', ')}</p>
                     ${receiptFile ? `<p><strong>Comprobante:</strong> <img src="${imageSrc}" alt="Comprobante" style="max-width: 300px;" /></p>` : '<p><strong>No se adjuntó comprobante</strong></p>'}
-                    // <p><strong>Código de sorteo:</strong> ${codigoSorteo? codigoSorteo: "no participa"}</p>
-                    // <p><strong>Signo del Zodiaco:</strong> ${Signo? Signo: "no participa"}</
+                    <p><strong>Código de sorteo:</strong> ${codigoSorteo? codigoSorteo: "no participa"}</p>
+                    <p><strong>Signo del Zodiaco:</strong> ${Signo? Signo: "no participa"}</
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
                     <a href="${baseUrl}/api/confirmar-pago?cartones=${cartonesParam}"

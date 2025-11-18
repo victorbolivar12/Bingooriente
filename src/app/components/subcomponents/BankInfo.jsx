@@ -27,14 +27,14 @@ const BankInfo = ({ cartones = [], total }) => {
 
     return (
         <div className="bg-white text-black p-4 rounded mt-4">
-            {/* <h3 className="font-bold text-[#D98019]">PAGO MÓVIL:</h3>
+            <h3 className="font-bold text-[#D98019]">PAGO MÓVIL:</h3>
             <p className="p-1.5"><strong>Banco:</strong> {bankData?.banco_pago}</p>
             <p className="p-1.5"><strong>Teléfono:</strong> {bankData?.telefono_pago}</p>
             <p className="p-1.5"><strong>Cédula:</strong> {bankData?.cedula_pago}</p>
-            <p className="p-1.5"> <strong>Monto a pagar:</strong> {total} bs </p> */}
+            <p className="p-1.5"> <strong>Monto a pagar:</strong> {total} bs </p>
 
-            {/* Línea divisoria
-            <div className="border-t border-black w-full mx-auto my-4"></div> */}
+            {/* Línea divisoria */}
+            <div className="border-t border-black w-full mx-auto my-4"></div>
 
             <p>
                 <strong>Cartones seleccionados:</strong>
@@ -43,7 +43,7 @@ const BankInfo = ({ cartones = [], total }) => {
                 {cartones.map((carton, index) => (
                     <div
                         key={index}
-                        className="p-1 bg-green-500 text-white rounded-md flex justify-center"
+                        className="p-1 bg-yellow-500 text-white rounded-md flex justify-center"
                     >
                         {carton}
                     </div>
